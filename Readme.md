@@ -1,5 +1,10 @@
+# Setup
+Run powershell as admin and execute setup.ps1
+It installs chocolatey repository, latest python, lxml for Windows, Free-proxy pip module
+
 Libxml for Win:
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
+
 
 To Do:  
 [] Automate lxml lib download based on python version  
