@@ -43,3 +43,5 @@ def changeProxyState():
 
 if __name__ == '__main__':
     changeProxyState()
+    input("Press enter to exit")
+    
