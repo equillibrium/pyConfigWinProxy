@@ -1,4 +1,5 @@
 ﻿#Requires -RunAsAdministrator
+Clear-Host
 
 Write-Host "Installing SwitchProxy..." -ForegroundColor Yellow
 
@@ -14,7 +15,7 @@ else {
     Write-Host $python_version -ForegroundColor Cyan
 }
 
-
+Write-Host "Updating python modules..." -ForegroundColor Yellow
 python -m pip install --upgrade pip wheel setuptools --verbose
 
 Set-Location $($MyInvocation.MyCommand.Definition | Split-Path -Parent)
@@ -26,6 +27,7 @@ $ProgressPreference = "SilentlyContinue"
 $pyV = $python_version.Substring(0, $python_version.Length-1) -replace '[^0-9]'
 
 [string]$lxmlLibName = (((iwr "https://www.lfd.uci.edu/~gohlke/pythonlibs").links | where innertext -like "lxml*cp*win_amd64.whl") | where outertext -like "*$pyV*" | select -First 1).outertext -replace "‑","-"
+Write-Host $lxmlLibName -ForegroundColor Cyan
 
 $lxmlDLLink = "https://download.lfd.uci.edu/pythonlibs/archived/$lxmlLibName"
 $OutputFile = "$($MyInvocation.MyCommand.Definition | Split-Path -Parent)\$lxmlLibName"
@@ -36,8 +38,10 @@ Get-Item -Path "$($MyInvocation.MyCommand.Definition | Split-Path -Parent)\lxml-
 
 Remove-Item $OutputFile -Force -Verbose
 
+Write-Host "Installing required modules..." -ForegroundColor Yellow
 python -m pip install --upgrade -r (Get-Item -Path "$($MyInvocation.MyCommand.Definition | Split-Path -Parent)\requirements.txt")
 
+Write-Host "Creating Desktop icon..." -ForegroundColor Yellow
 $WshShell = New-Object -comObject WScript.Shell
 $Shortcut = $WshShell.CreateShortcut("$Home\Desktop\SwitchProxy.lnk")
 $Shortcut.TargetPath = "$($MyInvocation.MyCommand.Definition | Split-Path -Parent)\main.py"
