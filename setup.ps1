@@ -6,13 +6,16 @@ Write-Host "Installing SwitchProxy..." -ForegroundColor Yellow
 $python_version = python --version
 
 if (-not $python_version) {
-    choco install python -y
-    Set-ExecutionPolicy Bypass -Scope Process -Force | Out-Null
+    try{Set-ExecutionPolicy Bypass -Scope Process -Force}catch{}
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
     iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+    choco uninstall python python3 --force
+    choco install python -y --force --force-dependancies
+    refreshenv
+    $python_version = python --version
 }
 else {
-    Write-Host $python_version -ForegroundColor Cyan
+    Write-Host "$python_version" -ForegroundColor Cyan
 }
 
 Write-Host "Updating python modules..." -ForegroundColor Yellow
@@ -24,6 +27,7 @@ Set-Location $($MyInvocation.MyCommand.Definition | Split-Path -Parent)
 Write-Host "Downloading and installing LXML..." -ForegroundColor Yellow
 
 $ProgressPreference = "SilentlyContinue"
+
 $pyV = $python_version.Substring(0, $python_version.Length-1) -replace '[^0-9]'
 
 [string]$lxmlLibName = (((iwr "https://www.lfd.uci.edu/~gohlke/pythonlibs").links | where innertext -like "lxml*cp*win_amd64.whl") | where outertext -like "*$pyV*" | select -First 1).outertext -replace "‑","-"
