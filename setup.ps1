@@ -50,7 +50,7 @@ python -m pip install --upgrade -r (Get-Item -Path "$($MyInvocation.MyCommand.De
 Write-Host "Creating Desktop icon..." -ForegroundColor Yellow
 $WshShell = New-Object -comObject WScript.Shell
 $Shortcut = $WshShell.CreateShortcut("$Home\Desktop\SwitchProxy.lnk")
-$Shortcut.TargetPath = "python `"$($MyInvocation.MyCommand.Definition | Split-Path -Parent)\main.py`""
+$Shortcut.TargetPath = "$($MyInvocation.MyCommand.Definition | Split-Path -Parent)\main.py"
 $Shortcut.Save()
 
 Write-Host "Install complete, use Desktop Link `"SwitchProxy`" to switch proxy on/off" -ForegroundColor Green
