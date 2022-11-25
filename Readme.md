@@ -1,6 +1,9 @@
 # Run as exe
 Just use dist\main.exe to run a 'compiled' version that does not require python installation
 
+# Build exe
+    pyinstaller --onefile .\main.py -n SwitchProxy
+
 # Setup
 If you want to run main.py: run powershell as admin and execute setup.ps1
 It installs chocolatey repository, the latest python, lxml for Windows, Free-proxy pip module
