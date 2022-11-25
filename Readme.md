@@ -13,3 +13,4 @@ To Do:
 - [ ] Error catching setup.ps1 and main.py
 - [ ] Create basic UI: on, off, country select
 - [ ] Create country checklist
+- [x] Compile as 1 exe file

@@ -1,1 +1,2 @@
 Free-proxy
+pyinstaller
