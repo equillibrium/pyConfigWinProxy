@@ -1,5 +1,6 @@
-from fp.fp import FreeProxy
 from winreg import *
+
+from fp.fp import FreeProxy
 
 
 def isProxyEnabled():
@@ -23,10 +24,10 @@ def changeProxyState():
     aKey = OpenKey(aReg, r"Software\Microsoft\Windows\CurrentVersion\Internet Settings", 0, KEY_WRITE)
 
     if isProxyEnabled():
-        print("Proxy is Enabled, switching off")
+        print("Proxy is ENABLED, switching off")
         val = 0
     else:
-        print("Proxy is Disabled, finding proxy and switching on...")
+        print("Proxy is DISABLED, finding proxy and switching on...")
         val = 1
         proxy = ''
         while proxy == '':
@@ -44,11 +45,14 @@ def changeProxyState():
         SetValueEx(aKey, "ProxyEnable", 0, REG_DWORD, val)
     except EnvironmentError:
         print("Encountered problems writing into the Registry!")
-    print("Proxy is Enabled!") if val == 1 else print("Proxy is Disabled!")
+    print(f"Proxy is now {'ENABLED!' if val == 1 else 'DISABLED!'}")
     CloseKey(aKey)
+    inputVal = input(
+        f"\r\nPress enter to {'ENABLE' if val == 0 else 'DISABLE'} proxy\r\nClose the program, press ctrl+c or type q to exit\r\n")
+    if inputVal.lower() == 'q':
+        exit()
 
 
 if __name__ == '__main__':
-    changeProxyState()
-    input("Press enter to exit")
-    
+    while True:
+        changeProxyState()
