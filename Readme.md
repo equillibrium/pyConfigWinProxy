@@ -16,7 +16,7 @@ Or download .exe from the latest release section: https://github.com/equillibriu
 # Build exe
 Use pyinstaller python module to build the .exe:
 
-    pyinstaller --onefile .\main.py -n SwitchProxy
+    pyinstaller --onefile .\main.py -n SwitchProxy --icon=.\SwitchProxy.ico
 
 # Setup
 If you want to run main.py: run powershell as admin and execute setup.ps1  
