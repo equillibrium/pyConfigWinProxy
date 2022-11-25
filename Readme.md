@@ -1,5 +1,6 @@
 # Run as exe
-Just use dist\main.exe to run a 'compiled' version that does not require python installation
+Just use dist\main.exe to run a 'compiled' version that does not require python installation.  
+Or donwload .exe from the latest release section: https://github.com/equillibrium/pyConfigWinProxy/releases/latest
 
 # Build exe
     pyinstaller --onefile .\main.py -n SwitchProxy
@@ -16,7 +17,7 @@ https://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
 - [x] Automate lxml lib download based on python version
 - [ ] Create Timer for Proxy
 - [ ] Change Desktop Icon based on Proxy Status
-- [ ] Error catching setup.ps1 and main.py
+- [x] (Needs more testing) Error catching setup.ps1 and main.py
 - [ ] Create basic UI: on, off, country select
 - [ ] Create country checklist
 - [x] Compile as 1 exe file
