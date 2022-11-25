@@ -23,6 +23,7 @@ def isProxyEnabled():
 def changeProxyState():
     aReg = ConnectRegistry(None, HKEY_CURRENT_USER)
     aKey = OpenKey(aReg, r"Software\Microsoft\Windows\CurrentVersion\Internet Settings", 0, KEY_WRITE)
+    proxy = ''
 
     if isProxyEnabled():
         print("Proxy is ENABLED, switching off...")
@@ -30,13 +31,15 @@ def changeProxyState():
     else:
         print("Proxy is DISABLED, finding proxy and switching on...")
         val = 1
-        proxy = ''
         while proxy == '':
             try:
                 proxy = FreeProxy(elite=1, https=0, country_id='US').get().replace("http://", "")
             except BaseException as e:
                 print(str(e), "Failed to fetch a proxy. Retying...")
-        print("\r\nFound proxy:", proxy)
+
+        os.system('cls||clear')
+
+        print("Found proxy:", proxy)
 
         try:
             SetValueEx(aKey, "ProxyServer", 0, REG_SZ, proxy)
@@ -46,8 +49,11 @@ def changeProxyState():
         SetValueEx(aKey, "ProxyEnable", 0, REG_DWORD, val)
     except EnvironmentError:
         print("Encountered problems writing into the Registry!")
-    print(f"\r\n>>Proxy is now {'ENABLED!' if val == 1 else 'DISABLED!'}<<")
+
+    print(f">>Proxy{' '+proxy+' ' if proxy else ' '}is now {'ENABLED!' if val == 1 else 'DISABLED!'}<<")
+
     CloseKey(aKey)
+
     inputVal = input(
         f"\r\nPress ENTER to {'ENABLE' if val == 0 else 'DISABLE'} proxy"
         "\r\nClose the program, press ctrl+c or type q to exit\r\n")
