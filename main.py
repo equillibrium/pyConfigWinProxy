@@ -28,11 +28,12 @@ def changeProxyState():
     else:
         print("Proxy is Disabled, finding proxy and switching on...")
         val = 1
+        proxy = ''
         while proxy == '':
             try:
-                proxy = FreeProxy(elite=1).get().replace("http://", "")
-            except EnvironmentError:
-                print("Failed to fetch a proxy")
+                proxy = FreeProxy(elite=1, https=0, country_id='US').get().replace("http://", "")
+            except BaseException as e:
+                print(str(e), "Failed to fetch a proxy. Retying...")
         print("Found proxy:", proxy)
 
         try:
@@ -43,7 +44,7 @@ def changeProxyState():
         SetValueEx(aKey, "ProxyEnable", 0, REG_DWORD, val)
     except EnvironmentError:
         print("Encountered problems writing into the Registry!")
-    print("Proxy is Enabled!") if val == '1' else print("Proxy is Disabled!")
+    print("Proxy is Enabled!") if val == 1 else print("Proxy is Disabled!")
     CloseKey(aKey)
 
 
