@@ -5,8 +5,11 @@ It installs chocolatey repository, latest python, lxml for Windows, Free-proxy p
 Libxml for Win:
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
 
+# Run as exe
+Just use dist\main.exe to run a 'compiled' version that does not require python installation
 
-To Do:  
+
+#To Do 
 - [x] Automate lxml lib download based on python version
 - [ ] Create Timer for Proxy
 - [ ] Change Desktop Icon based on Proxy Status
