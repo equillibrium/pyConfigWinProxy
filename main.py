@@ -25,7 +25,7 @@ def changeProxyState():
     aKey = OpenKey(aReg, r"Software\Microsoft\Windows\CurrentVersion\Internet Settings", 0, KEY_WRITE)
 
     if isProxyEnabled():
-        print("Proxy is ENABLED, switching off")
+        print("Proxy is ENABLED, switching off...")
         val = 0
     else:
         print("Proxy is DISABLED, finding proxy and switching on...")
