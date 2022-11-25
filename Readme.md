@@ -19,7 +19,7 @@ Use pyinstaller python module to build the .exe:
     pyinstaller --onefile .\main.py -n SwitchProxy
 
 # Setup
-If you want to run main.py: run powershell as admin and execute setup.ps1
+If you want to run main.py: run powershell as admin and execute setup.ps1  
 It installs chocolatey repository, the latest python, lxml for Windows, Free-proxy pip module
 
 Libxml for Win:
