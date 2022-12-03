@@ -52,12 +52,6 @@ def changeProxyState():
     except ValueError:
         print("Error in setting proxy exclusions in registry!")
 
-    # Set Auto Detect
-    try:
-        SetValueEx(aKey, "ProxyOverride", 0, REG_SZ, '*.local;*.tass.ru;*.corp.tass.ru;<local>')
-    except ValueError:
-        print("Error in setting proxy exclusions in registry!")
-
     # Enable/disable proxy
     try:
         SetValueEx(aKey, "ProxyEnable", 0, REG_DWORD, val)
