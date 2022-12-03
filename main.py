@@ -33,7 +33,7 @@ def changeProxyState():
         val = 1
         while proxy == '':
             try:
-                proxy = FreeProxy(elite=1, https=0, country_id='US').get().replace("http://", "")
+                proxy = FreeProxy(elite=1, rand=1, country_id='US').get().replace("http://", "")
             except BaseException as e:
                 print(str(e), "Failed to fetch a proxy. Retying...")
 
@@ -45,6 +45,20 @@ def changeProxyState():
             SetValueEx(aKey, "ProxyServer", 0, REG_SZ, proxy)
         except ValueError:
             print("Error in setting proxy server in registry!")
+
+    # Set Exclusions
+    try:
+        SetValueEx(aKey, "ProxyOverride", 0, REG_SZ, '*.local;*.tass.ru;*.corp.tass.ru;<local>')
+    except ValueError:
+        print("Error in setting proxy exclusions in registry!")
+
+    # Set Auto Detect
+    try:
+        SetValueEx(aKey, "ProxyOverride", 0, REG_SZ, '*.local;*.tass.ru;*.corp.tass.ru;<local>')
+    except ValueError:
+        print("Error in setting proxy exclusions in registry!")
+
+    # Enable/disable proxy
     try:
         SetValueEx(aKey, "ProxyEnable", 0, REG_DWORD, val)
     except EnvironmentError:
