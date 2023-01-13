@@ -1,6 +1,7 @@
 from winreg import *
 import os
 
+import requests
 from fp.fp import FreeProxy
 
 
@@ -33,7 +34,8 @@ def changeProxyState():
         val = 1
         while proxy == '':
             try:
-                proxy = FreeProxy(elite=1, rand=1, country_id='US').get().replace("http://", "")
+                #proxy = FreeProxy(elite=1, rand=1, country_id='US').get().replace("http://", "")
+                proxy = requests.get('https://gimmeproxy.com/api/getProxy?supportsHttps=true&country=US,CA,GB&protocol=http&ipPort=true&maxCheckPeriod=360').text
             except BaseException as e:
                 print(str(e), "Failed to fetch a proxy. Retying...")
 
@@ -58,15 +60,26 @@ def changeProxyState():
     except EnvironmentError:
         print("Encountered problems writing into the Registry!")
 
-    print(f">>Proxy{' '+proxy+' ' if proxy else ' '}is now {'ENABLED!' if val == 1 else 'DISABLED!'}<<")
+    flushNetworkSettings()
+
+    print(f">>Proxy{' ' + proxy + ' ' if proxy else ' '}is now {'ENABLED!' if val == 1 else 'DISABLED!'}<<")
 
     CloseKey(aKey)
 
+    # Pause or Quit
     inputVal = input(
         f"\r\nPress ENTER to {'ENABLE' if val == 0 else 'DISABLE'} proxy"
         "\r\nClose the program, press ctrl+c or type q to exit\r\n")
     if inputVal.lower() == 'q':
         exit()
+
+
+def flushNetworkSettings():
+    os.system('cmd /c "ipconfig /flushdns"')
+    os.system('cmd /c "nbtstat -r"')
+    os.system('cmd /c "netsh int ip reset"')
+    os.system('cmd /c "netsh winsock reset"')
+    os.system('cls||clear')
 
 
 if __name__ == '__main__':
